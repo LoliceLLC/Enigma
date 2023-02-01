@@ -34,8 +34,6 @@ Enigma.ItemsForBlackHoleCombo = HeroesCore.AddOptionMultiSelect({ 'Hero Specific
 }, false)
 HeroesCore.AddOptionIcon(Enigma.ItemsForBlackHoleCombo, '~/MenuIcons/dots.png')
 
-Enigma.ItemsForBlackHoleCombo = HeroesCore.AddOptionMultiSelect({ 'Hero Specific', 'Intelligence', 'Enigma' }, 'Item123:', HeroesCore.ItemsUsage, false)
-
 Enigma.UseRefresherEnable = HeroesCore.AddOptionBool({ 'Hero Specific', 'Intelligence',  'Enigma' }, 'Use refresher in combo', false)
 HeroesCore.AddOptionIcon(Enigma.UseRefresherEnable, 'panorama/images/items/refresher_png.vtex_c')
 Menu.AddOptionTip(Enigma.UseRefresherEnable, 'RefresherShard in priority!')
@@ -248,9 +246,13 @@ function Enigma.OnUpdate()
                         if (Menu.IsEnabled(Enigma.UseRefresherEnable)) then
                             if (not Ability.IsInAbilityPhase(NPC.GetAbilityByIndex(MyHero, 5))) then
                                 if (not Ability.IsChannelling(NPC.GetAbilityByIndex(MyHero, 5))) then
-                                    if (Ability.IsCastable(NPC.GetItem(MyHero, 'item_refresher'), MyMana) or Ability.IsCastable(NPC.GetItem(MyHero, 'item_refresher_shard'), MyMana)) then
+                                    if (Ability.IsCastable(NPC.GetItem(MyHero, 'item_refresher_shard'), MyMana)) then
                                         Ability.CastNoTarget(NPC.GetItem(MyHero, 'item_refresher_shard'))
+                                        return
+                                    end
+                                    if (Ability.IsCastable(NPC.GetItem(MyHero, 'item_refresher'), MyMana)) then
                                         Ability.CastNoTarget(NPC.GetItem(MyHero, 'item_refresher'))
+                                        return
                                     end
                                 end
                             end
